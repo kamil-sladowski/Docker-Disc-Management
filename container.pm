@@ -26,8 +26,9 @@ sub get_running_containers{
     foreach my $line (@lines){
         if (index($line, "CONTAINER ID") == -1) {
             print "LINE " . $line . "\n";
-            my @container_record = split ' ', $line;
-            @containers_ids.push($container_record[0]);
+            my @container_record = split / /, $line;
+print @container_record;
+            push(@containers_ids, $container_record[0]);
             print "added $container_record[0] \n";
         }
     }

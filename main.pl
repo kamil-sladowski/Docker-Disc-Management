@@ -6,15 +6,19 @@
 #
 
 
-use 5.010;
+#use 5.26.1;
 use strict;
 use warnings;
+use File::Basename;
+use lib dirname (__FILE__);
+#use Cwd qw(abs_path);
+#use FindBin;
+#use lib $FindBin::Bin;
+
 use modules;
 use IPC::Run 'run';
 use commands;
-use arguments;
 use container;
-
 
 sub print_help{
 print "This is the simulator, which generates containers in Docker, to eat memory disc size.
@@ -32,10 +36,10 @@ docker system df -v
 sub run_spammer{
     my ($spamming_delay) = @_;
     for(1..5) {
-        say "Spammer - start";
+        print "Spammer - start";
         # my $container_id = run_spamming_container();
         run_spamming_container();
-        say "Spammer - end";
+        print "Spammer - end";
         sleep $spamming_delay;
     }
 }
@@ -44,7 +48,7 @@ sub run_cleaner{
     my $cleaning_delay = @_;
     my @containers_ids = ();
     for(1..5) {
-        say "Cleaner - start";
+        print "Cleaner - start";
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
@@ -52,7 +56,7 @@ sub run_cleaner{
                 execute_on($container_id, "rm");
             }
         }
-        say "Cleaner  - end";
+        print "Cleaner  - end";
         sleep $cleaning_delay;
     }
 }

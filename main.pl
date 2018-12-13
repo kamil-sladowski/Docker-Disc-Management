@@ -45,46 +45,7 @@ Usage:
 "
 }
 
-sub run_spammer{
-    my ($spamming_delay) = @_;
-    for(1..5) {
-        print "Spammer - start";
-        run_spamming_container();
-        print "Spammer - end";
-        sleep $spamming_delay;
-    }
-}
 
-sub run_cleaner{
-    my $cleaning_delay = @_;
-    my @containers_ids = ();
-    for(1..5) {
-        print "Cleaner - start";
-        @containers_ids = get_running_containers();
-        foreach my $container_id (@containers_ids) {
-            if (is_container_eat_to_much($container_id)) {
-                print "INFO: Killing container " . $container_id . "...\n";
-                #execute_on($container_id, "stop");
-                execute_on($container_id, "rm");
-                print "INFO: Container " . $container_id . " stopped.\n";
-            }
-        }
-        print "Cleaner  - end";
-        sleep $cleaning_delay;
-    }
-}
-
-sub start_threads {
-    my ($spamming_delay, $cleaning_delay) = @_;
-    my $t1 = Thread->new(\&run_spammer, $spamming_delay);
-    my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
-
-    my $stuff1 = $t1->join();
-    my $stuff2 = $t2->join();
-    print "After join \n";
-
-    
-}
 my $eat_disc_factor = 1;
 my $clean_disc_frequency = 1;
 my $help = 0;
@@ -104,16 +65,12 @@ GetOptions(
 
 if( $help ) {
     print_help();
-    }
-elsif ($check){
+} elsif ($check){
     print execute("system_usage_full");
-}
-elsif($prune){
+} elsif($prune){
     print "prune \n";
     execute("cleanup_all_unused");
-} 
-else {
-  
+} else {
     if(($eat_disc_factor ~~ [ 1, 2, 3, 4, 5]) && ($clean_disc_frequency ~~ [ 1, 2, 3, 4, 5])){
         print "correct patameters \n";
         $eat_disc_factor = 6 - $eat_disc_factor;

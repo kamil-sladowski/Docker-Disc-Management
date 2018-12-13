@@ -58,8 +58,10 @@ sub run_cleaner{
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
+                print "INFO: Stopping container " . $container_id . "...\n";
                 execute_on($container_id, "stop");
                 execute_on($container_id, "rm");
+                print "INFO: Container " . $container_id . " stopped.\n";
             }
         }
         print "Cleaner  - end";
@@ -71,9 +73,7 @@ sub start_threads {
     my ($spamming_delay, $cleaning_delay) = @_;
     my $t1 = Thread->new(\&run_spammer, $spamming_delay);
     my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
-    print "This is the main program\n";
 
-    print "Waiting for thread now\n";
     my $stuff1 = $t1->join();
     my $stuff2 = $t2->join();
     print "After join \n";
@@ -115,8 +115,8 @@ else {
         $clean_disc_frequency = 6 - $clean_disc_frequency;
         my $cleaning_delay = $clean_disc_frequency/$timeout;
         my $spamming_delay = $eat_disc_factor/$timeout;
-        print "clean: " . $cleaning_delay . "\n";
-        print "eat: " . $spamming_delay . "\n";
+        print "clean parameter: " . $cleaning_delay . "\n";
+        print "eat parameter: " . $spamming_delay . "\n";
         build_spammer_img();
         start_threads($spamming_delay, $cleaning_delay);
     }

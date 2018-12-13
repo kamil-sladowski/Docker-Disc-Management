@@ -7,6 +7,7 @@ require Exporter;
 @EXPORT = qw/build_spammer_img run_spamming_container is_container_eat_to_much /;
 
 sub build_spammer_img{
+    print "INFO: Building image. It may take a few minutes... \n";
     execute("build_spammer_image");
 }
 

@@ -103,6 +103,10 @@ if( $help ) {
 elsif ($check){
     print execute("system_usage_full");
 }
+elsif($prune){
+    print "prune \n";
+    execute("cleanup_all_unused");
+} 
 else {
   
     if(($eat_disc_factor ~~ [ 1, 2, 3, 4, 5]) && ($clean_disc_frequency ~~ [ 1, 2, 3, 4, 5])){
@@ -121,11 +125,6 @@ else {
         print_help();
         die;
     }
-    
-    if($prune){
-        print "prune \n";
-        execute("cleanup_all_unused");
-    } 
 }
 
 

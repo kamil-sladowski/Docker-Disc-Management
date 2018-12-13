@@ -25,7 +25,6 @@ sub get_running_containers{
     my @lines = split "\n", $output;
     foreach my $line (@lines){
         if (index($line, "CONTAINER ID") == -1) {
-            print "INFO: Running container " . $line . "\n";
             my @container_record = split / /, $line;
             push(@containers_ids, $container_record[0]);
         }
@@ -43,7 +42,7 @@ sub is_container_eat_to_much{
             my @disc_usage = split ' ', $line;
             my $size =  $disc_usage[2];
             my $unit = $disc_usage[3];
-            if ("MiB" eq $unit || "GiB" eq $unit ){
+            if ("MiB" eq $unit || "GiB" eq $unit || "MB" eq $unit || "GB" eq $unit ){
                 print "INFO: Container " . $container_id . " eat to much resources\n";
                 return 1;
             }
@@ -79,16 +78,16 @@ sub run_cleaner{
             }
         }
         print "Cleaner  - end";
-        sleep $cleaning_delay;
+        sleep $cleaning_delay + 5;
     }
 }
 
 sub start_threads {
     my ($spamming_delay, $cleaning_delay) = @_;
-    my $t1 = Thread->new(\&run_spammer, $spamming_delay);
+    #my $t1 = Thread->new(\&run_spammer, $spamming_delay);
     my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
 
-    my $stuff1 = $t1->join();
+    #my $stuff1 = $t1->join();
     my $stuff2 = $t2->join();
     print "After join \n";  
 }

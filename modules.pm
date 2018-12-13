@@ -18,7 +18,7 @@ sub check_modules {
             warn "Not found : $_" if $@;
         }
         else {
-            say "Found : $_";
+            print "Found : $_";
         }
     }
 }

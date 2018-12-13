@@ -69,9 +69,9 @@ sub is_container_eat_to_much{
 sub run_spammer{
     my ($spamming_delay) = @_;
     for(1..5) {
-        print "Spammer - start";
+        print "INFO: Spammer start \n";
         run_spamming_container();
-        print "Spammer - end";
+        print "INFO: Spammer done \n";
         sleep $spamming_delay;
     }
 }
@@ -93,7 +93,7 @@ sub run_cleaner{
     
     for(1..5) {
 	my @containers_ids = ();
-        print "Cleaner - start";
+        print "INFO: Cleaner started \n";
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
@@ -103,19 +103,18 @@ sub run_cleaner{
                 print "INFO: Container " . $container_id . " stopped.\n";
             } else {print "INFO: container " . $container_id . "is OK.\n";}
         }
-        print "Cleaner  - end";
+        print "INFO: Cleaner done \n";
         sleep $cleaning_delay + 5;
     }
 }
 
 sub start_threads {
     my ($spamming_delay, $cleaning_delay) = @_;
-    #my $t1 = Thread->new(\&run_spammer, $spamming_delay);
-    #my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
+    my $t1 = Thread->new(\&run_spammer, $spamming_delay);
+    my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
 
-    #my $stuff1 = $t1->join();
-    #my $stuff2 = $t2->join();
-    print "INFO: Done \n";  
+    $t1->join();
+    $t2->join();  
     rm_exited_containers();
-    
+    print "INFO: DONE \n";
 }

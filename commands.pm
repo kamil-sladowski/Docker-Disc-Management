@@ -17,7 +17,7 @@ my @system_usage_full = split(/ /, "docker system df -v");
 my @run_ubuntu = split(/ /, "docker run -itd ubuntu");
 my @delete_dangling_volumes = ("docker", "volume", "rm", "$(docker volume ls -qf dangling=true)");
 my @delete_dangling_images = ("docker", "rmi", "$(docker images -qf dangling=true)");
-my @cleanup_all_unused = split(/ /, "docker system prune -a");  # [y]
+my @cleanup_all_unused = split(/ /, "docker system prune -a -f");  # [y]
 
 my @build_spammer_image = split(/ /, "docker build -t spammer .");
 my @run_spamming_container= split(/ /, "docker run -itd spammer");

@@ -16,7 +16,6 @@ use lib dirname (__FILE__);
 #use lib $FindBin::Bin;
 
 use modules;
-use IPC::Run 'run';
 use commands;
 use container;
 use Getopt::Long;

@@ -24,6 +24,11 @@ use Thread;
 sub print_help{
 print "This is the simulator, which generates containers in Docker, to eat memory disc size.
 At the same time, a second process works, which stops and removes containers that take up more than 1 MB disc space.
+
+First of all navigate to directory with script and execute 
+# docker build -t spammer .
+Script will do it manually if doesn't find, but in this case you will not be able to track the download speed.
+
 There are available two parameters: --eat, --clean, which define how often each of the processes (allocation and cleaning) should be launched.
 Also you can use --prune to remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes.
 The difference between --clean and --prune is that first kill demanding continers, the second deletes unused resources.

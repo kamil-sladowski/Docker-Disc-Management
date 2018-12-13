@@ -27,7 +27,6 @@ sub get_running_containers{
         if (index($line, "CONTAINER ID") == -1) {
             print "INFO: Running container " . $line . "\n";
             my @container_record = split / /, $line;
-            print @container_record;
             push(@containers_ids, $container_record[0]);
         }
     }
@@ -41,7 +40,6 @@ sub is_container_eat_to_much{
     my @lines = split "\n", $output;
     foreach my $line (@lines){
         if (index($line, $container_id) != -1) {
-            print "\n\n" . $container_id . " in " . $line . "\n";
             my @disc_usage = split ' ', $line;
             my $size =  $disc_usage[2];
             my $unit = $disc_usage[3];

@@ -11,11 +11,10 @@ use strict;
 use warnings;
 use File::Basename;
 use lib dirname (__FILE__);
-#use Cwd qw(abs_path);
-#use FindBin;
-#use lib $FindBin::Bin;
 
 use modules;
+check_modules();
+
 use commands;
 use container;
 use Getopt::Long;

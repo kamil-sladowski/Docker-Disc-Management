@@ -48,7 +48,6 @@ $commands{rm} = \@rm;
 
 sub execute {
     my ($key) = @_;
-    print join(", ", @{$commands{$key}} ) . "\n";
     run [@{$commands{$key}}], ">", \my $stdout;
     return $stdout;
 }

@@ -15,10 +15,7 @@ sub check_modules {
     for (@modules) {
         eval "use $_";
         if ($@) {
-            warn "Not found : $_" if $@;
-        }
-        else {
-            print "Found : $_";
+            die "Not found library: $_" if $@;
         }
     }
 }

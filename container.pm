@@ -10,6 +10,7 @@ require Exporter;
 sub build_spammer_img{
     print "INFO: Building image. It may take a few minutes... \n";
     execute("build_spammer_image");
+    print "INFO: Image created. \n";
 }
 
 sub run_spamming_container{
@@ -28,6 +29,18 @@ sub get_running_containers{
             my @container_record = split / /, $line;
             push(@containers_ids, $container_record[0]);
         }
+    }
+    return @containers_ids;
+}
+
+sub get_exited_containers{
+    my @containers_ids = ();
+    my $output = execute("ps_exited");
+
+    my @lines = split "\n", $output;
+    foreach my $line (@lines){
+            my @container_record = split / /, $line;
+            push(@containers_ids, $container_record[0]);
     }
     return @containers_ids;
 }
@@ -63,19 +76,32 @@ sub run_spammer{
     }
 }
 
+
+sub rm_exited_containers{
+	my @containers_ids = ();
+        @containers_ids = get_exited_containers();
+        foreach my $container_id (@containers_ids) {       
+                print "INFO: Removing exited container " . $container_id . "...\n";
+                execute_on($container_id, "rm");
+                print "INFO: Container " . $container_id . " stopped.\n";
+        }  
+}
+
+
 sub run_cleaner{
     my $cleaning_delay = @_;
-    my @containers_ids = ();
+    
     for(1..5) {
+	my @containers_ids = ();
         print "Cleaner - start";
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
                 print "INFO: Killing container " . $container_id . "...\n";
-                #execute_on($container_id, "stop");
+                execute_on($container_id, "stop");
                 execute_on($container_id, "rm");
                 print "INFO: Container " . $container_id . " stopped.\n";
-            }
+            } else {print "INFO: container " . $container_id . "is OK.\n";}
         }
         print "Cleaner  - end";
         sleep $cleaning_delay + 5;
@@ -84,12 +110,12 @@ sub run_cleaner{
 
 sub start_threads {
     my ($spamming_delay, $cleaning_delay) = @_;
-    my $t1 = Thread->new(\&run_spammer, $spamming_delay);
-    my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
+    #my $t1 = Thread->new(\&run_spammer, $spamming_delay);
+    #my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
 
-    my $stuff1 = $t1->join();
-    my $stuff2 = $t2->join();
+    #my $stuff1 = $t1->join();
+    #my $stuff2 = $t2->join();
     print "INFO: Done \n";  
-    execute("delete_exited_containers");
+    rm_exited_containers();
     
 }

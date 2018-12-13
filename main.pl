@@ -66,17 +66,13 @@ if( $help ) {
 } elsif ($check){
     print execute("system_usage_full");
 } elsif($prune){
-    print "prune \n";
     execute("cleanup_all_unused");
 } else {
     if(($eat_disc_factor ~~ [ 1, 2, 3, 4, 5]) && ($clean_disc_frequency ~~ [ 1, 2, 3, 4, 5])){
-        print "correct patameters \n";
         $eat_disc_factor = 6 - $eat_disc_factor;
         $clean_disc_frequency = 6 - $clean_disc_frequency;
         my $cleaning_delay = $clean_disc_frequency/$timeout;
         my $spamming_delay = $eat_disc_factor/$timeout;
-        print "clean parameter: " . $cleaning_delay . "\n";
-        print "eat parameter: " . $spamming_delay . "\n";
         build_spammer_img();
         start_threads($spamming_delay, $cleaning_delay);
     }

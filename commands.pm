@@ -9,6 +9,7 @@ require Exporter;
 
 my %commands = ();
 my @ps = split(/ /, "docker ps");
+my @ps_exited = split(/ /, "docker ps --all -q -f status=exited");
 my @logs = split(/ /, "docker logs");
 my @stats = split(/ /, "docker stats");
 my @system_usage = split(/ /, "docker system df");
@@ -27,6 +28,7 @@ my @rm = split(/ /, "docker rm");
 my @memory_usage = ("docker", "stats", "--all", "--format", "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}", "--no-stream");
 
 $commands{ps} = \@ps;
+$commands{ps_exited} = \@ps_exited;
 $commands{logs} = \@logs;
 $commands{stats} = \@stats;
 $commands{system_usage} = \@system_usage;

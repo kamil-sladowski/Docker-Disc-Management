@@ -16,6 +16,7 @@ my @system_usage_full = split(/ /, "docker system df -v");
 my @run_ubuntu = split(/ /, "docker run -itd ubuntu");
 my @delete_dangling_volumes = ("docker", "volume", "rm", "$(docker volume ls -qf dangling=true)");
 my @delete_dangling_images = ("docker", "rmi", "$(docker images -qf dangling=true)");
+my @delete_exited_containers = ("docker", "rm", "$(docker ps --all -q -f status=exited)");
 my @cleanup_all_unused = split(/ /, "docker system prune -a -f");  # [y]
 
 my @build_spammer_image = split(/ /, "docker build -t spammer .");
@@ -33,6 +34,7 @@ $commands{system_usage_full} = \@system_usage_full;
 $commands{run_ubuntu} = \@run_ubuntu;
 $commands{delete_dangling_volumes} = \@delete_dangling_volumes;
 $commands{delete_dangling_images} = \@delete_dangling_images;
+$commands{delete_exited_containers} = \@delete_exited_containers;
 $commands{cleanup_all_unused} = \@cleanup_all_unused;
 $commands{build_spammer_image} = \@build_spammer_image;
 $commands{run_spamming_container} = \@run_spamming_container;

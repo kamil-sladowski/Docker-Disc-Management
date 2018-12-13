@@ -63,8 +63,8 @@ sub run_cleaner{
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
-                print "INFO: Stopping container " . $container_id . "...\n";
-                execute_on($container_id, "stop");
+                print "INFO: Killing container " . $container_id . "...\n";
+                #execute_on($container_id, "stop");
                 execute_on($container_id, "rm");
                 print "INFO: Container " . $container_id . " stopped.\n";
             }

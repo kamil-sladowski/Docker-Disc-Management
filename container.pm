@@ -101,7 +101,7 @@ sub run_cleaner{
                 execute_on($container_id, "stop");
                 execute_on($container_id, "rm");
                 print "INFO: Container " . $container_id . " stopped.\n";
-            } else {print "INFO: container " . $container_id . "is OK.\n";}
+            } else {print "INFO: container " . $container_id . " is OK.\n";}
         }
         print "INFO: Cleaner done \n";
         sleep $cleaning_delay + 5;

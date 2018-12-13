@@ -84,10 +84,12 @@ sub run_cleaner{
 
 sub start_threads {
     my ($spamming_delay, $cleaning_delay) = @_;
-    #my $t1 = Thread->new(\&run_spammer, $spamming_delay);
+    my $t1 = Thread->new(\&run_spammer, $spamming_delay);
     my $t2 = Thread->new(\&run_cleaner, $cleaning_delay);
 
-    #my $stuff1 = $t1->join();
+    my $stuff1 = $t1->join();
     my $stuff2 = $t2->join();
-    print "After join \n";  
+    print "INFO: Done \n";  
+    execute("delete_exited_containers");
+    
 }

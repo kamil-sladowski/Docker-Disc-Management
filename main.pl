@@ -19,7 +19,6 @@ use modules;
 use commands;
 use container;
 use Getopt::Long;
-use Thread;
 
 sub print_help{
 print "This is the simulator, which generates containers in Docker, to eat memory disc size.

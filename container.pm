@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use Thread;
 
 our ( @ISA, @EXPORT );
 require Exporter;

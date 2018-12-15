@@ -54,7 +54,7 @@ sub is_container_eat_to_much{
         if (index($line, $container_id) != -1) {
             my @disc_usage = split ' ', $line;
             my $size =  $disc_usage[2];
-	    my $size =~ s/[^a-zA-Z,]//g;
+	    $size =~ s/[^a-zA-Z,]//g;
             if ("MiB" eq $size || "GiB" eq $size || "MB" eq $size || "GB" eq $size ){
                 print "INFO: Container " . $container_id . " eat to much resources\n";
                 return 1;

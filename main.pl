@@ -24,13 +24,13 @@ print "This is the simulator, which generates containers in Docker, to eat memor
 At the same time, a second process works, which stops and removes containers that take up more than 1 MB disc space.
 
 Install Docker:
-$ sudo apt-get install \
+> sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     software-properties-common
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-$ sudo apt-get install docker.io
+> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+> sudo apt-get install docker.io
 
 First of all navigate to directory with script and execute 
 # docker build -t spammer .
@@ -41,7 +41,7 @@ Also you can use --prune to remove all unused containers, networks, images (both
 The difference between --clean and --prune is that first kill demanding continers, the second deletes unused resources.
 
 
-The whole program works for about 100 second. 
+The whole program works for about 1.5 minute. 
 During this, you can monitor the status of disc usage, by running script with --check flag, on the second console,
 or manuall by executing following command:
 # docker system df -v

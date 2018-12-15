@@ -97,11 +97,12 @@ sub run_cleaner{
         @containers_ids = get_running_containers();
         foreach my $container_id (@containers_ids) {
             if (is_container_eat_to_much($container_id)) {
-                print "INFO: Killing container " . $container_id . "...\n";
+                print "INFO: Stopping container " . $container_id . "...\n";
                 execute_on($container_id, "stop");
+		print "INFO: Removing container " . $container_id . "...\n";
                 execute_on($container_id, "rm");
-                print "INFO: Container " . $container_id . " stopped.\n";
-            } else {print "INFO: container " . $container_id . " is OK.\n";}
+                print "INFO: Container " . $container_id . " removed.\n";
+            } 
         }
         print "INFO: Cleaner done \n";
         sleep $cleaning_delay + 5;

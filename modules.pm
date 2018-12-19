@@ -8,6 +8,7 @@ require Exporter;
 
 sub check_modules {
     my @modules = qw(
+        File::Basename
         Thread
         Getopt::Long
     );

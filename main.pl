@@ -23,14 +23,7 @@ sub print_help{
 print "This is the simulator, which generates containers in Docker, to eat memory disc size.
 At the same time, a second process works, which stops and removes containers that take up more than 1 MB disc space.
 
-Install Docker:
-> sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common
-> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-> sudo apt-get install docker.io
+First Docker should be installed.
 
 First of all navigate to directory with script and execute 
 # docker build -t spammer .
@@ -69,6 +62,11 @@ GetOptions(
     'check!'     => \$check,
     'prune!'     => \$prune,
 ) or die "Incorrect usage!\n";
+
+if ( $help == 0 && $< != 0 ) {
+print "ERROR: This script must be run as root\n"; 
+exit (1);
+}
 
 if( $help ) {
     print_help();

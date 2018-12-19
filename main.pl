@@ -23,6 +23,7 @@ sub print_help{
 print "This is the simulator, which generates containers in Docker, to eat memory disc size.
 At the same time, a second process works, which stops and removes containers that take up more than 1 MB disc space.
 
+Script can be launched only by root.
 First Docker should be installed.
 
 First of all navigate to directory with script and execute 
